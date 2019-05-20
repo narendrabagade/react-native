@@ -240,12 +240,15 @@ public class UIImplementation {
       int newWidth,
       int newHeight) {
     ReactShadowNode cssNode = mShadowNodeRegistry.getNode(nodeViewTag);
-    if (cssNode == null) {
-      FLog.w(
+//     if (cssNode == null) {
+//       FLog.w(
+//         ReactConstants.TAG,
+//         "Tried to update size of non-existent tag: " + nodeViewTag);
+//       return;
+//     }
+    FLog.w(
         ReactConstants.TAG,
-        "Tried to update size of non-existent tag: " + nodeViewTag);
-      return;
-    }
+        "***NNN Tried to update size of non-existent tag: " + nodeViewTag);
     cssNode.setStyleWidth(newWidth);
     cssNode.setStyleHeight(newHeight);
 
