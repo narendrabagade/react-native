@@ -18,14 +18,27 @@ public class JSStackTrace {
   final private static Pattern mJsModuleIdPattern = Pattern.compile("(?:^|[/\\\\])(\\d+\\.js)$");
 
   public static String format(String message, ReadableArray stack) {
+    System.out.println("***NNN Exception in format JSStackTrace");
     StringBuilder stringBuilder = new StringBuilder(message).append(", stack:\n");
     for (int i = 0; i < stack.size(); i++) {
       ReadableMap frame = stack.getMap(i);
       stringBuilder
         .append(frame.getString("methodName"))
         .append("@")
-        .append(stackFrameToModuleId(frame))
-        .append(frame.getInt("lineNumber"));
+        // .append(stackFrameToModuleId(frame))
+        // .append(frame.getInt("lineNumber"));
+        .append(parseFileId(frame));
+      
+      if (frame.hasKey("lineNumber") &&
+          !frame.isNull("lineNumber") &&
+          frame.getType("lineNumber") == ReadableType.Number) {
+          stringBuilder
+            .append(frame.getInt("lineNumber"));
+        } else {
+        stringBuilder
+          .append(-1);
+      }
+      
       if (frame.hasKey("column") &&
         !frame.isNull("column") &&
         frame.getType("column") == ReadableType.Number) {
