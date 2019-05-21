@@ -107,18 +107,23 @@ public class DialogModule extends ReactContextBaseJavaModule implements Lifecycl
     }
 
     private void dismissExisting() {
-      if (isUsingSupportLibrary()) {
-        SupportAlertFragment oldFragment =
-            (SupportAlertFragment) mSupportFragmentManager.findFragmentByTag(FRAGMENT_TAG);
-        if (oldFragment != null) {
-          oldFragment.dismiss();
+      try {
+        if (isUsingSupportLibrary()) {
+          SupportAlertFragment oldFragment =
+              (SupportAlertFragment) mSupportFragmentManager.findFragmentByTag(FRAGMENT_TAG);
+          if (oldFragment != null) {
+            oldFragment.dismiss();
+          }
+        } else {
+          AlertFragment oldFragment =
+              (AlertFragment) mFragmentManager.findFragmentByTag(FRAGMENT_TAG);
+          if (oldFragment != null) {
+            oldFragment.dismiss();
+          }
         }
-      } else {
-        AlertFragment oldFragment =
-            (AlertFragment) mFragmentManager.findFragmentByTag(FRAGMENT_TAG);
-        if (oldFragment != null) {
-          oldFragment.dismiss();
-        }
+      } catch (Exception e) {
+        FLog.w(DialogModule.class, "***NNN Exception in DialogModule " + e.toString());
+        //TODO: handle exception
       }
     }
 
