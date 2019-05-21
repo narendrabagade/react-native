@@ -417,10 +417,17 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
     // Drawable.mutate() can sometimes crash due to an AOSP bug:
     // See https://code.google.com/p/android/issues/detail?id=191754 for more info
     Drawable background = view.getBackground();
-    Drawable drawableToMutate = background.getConstantState() != null ?
-      background.mutate() :
-      background;
-
+//     Drawable drawableToMutate = background.getConstantState() != null ?
+//       background.mutate() :
+//       background;
+    Drawable drawableToMutate = background;
+    if (background.getConstantState() != null) {
+      try {
+        drawableToMutate = background.mutate();
+        } catch(Exception e) {
+          System.out.println("***NNN Exception in setUnderlineColor ReactTextInputManager " + e.toString());
+      }
+    }
     if (underlineColor == null) {
       drawableToMutate.clearColorFilter();
     } else {
