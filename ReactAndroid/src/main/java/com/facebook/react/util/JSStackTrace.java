@@ -25,9 +25,8 @@ public class JSStackTrace {
       stringBuilder
         .append(frame.getString("methodName"))
         .append("@")
-        // .append(stackFrameToModuleId(frame))
+        .append(stackFrameToModuleId(frame))
         // .append(frame.getInt("lineNumber"));
-        .append(parseFileId(frame));
       
       if (frame.hasKey("lineNumber") &&
           !frame.isNull("lineNumber") &&
