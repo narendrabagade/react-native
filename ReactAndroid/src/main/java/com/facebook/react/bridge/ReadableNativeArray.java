@@ -107,11 +107,16 @@ public class ReadableNativeArray extends NativeArray implements ReadableArray {
 
   @Override
   public double getDouble(int index) {
+    try {
     if (mUseNativeAccessor) {
       jniPassCounter++;
       return getDoubleNative(index);
     }
-    return ((Double) getLocalArray()[index]).doubleValue();
+      return ((Double) getLocalArray()[index]).doubleValue();
+    } catch(Exception e){
+      System.out.println("Exception in getDouble"+e.toString());
+      return 0;
+    }
   }
   private native double getDoubleNative(int index);
 
